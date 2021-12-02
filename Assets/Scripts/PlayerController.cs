@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
+    [SerializeField] private float JumpForce = 500;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
 
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
 
         rb.AddForce(movement * speed);
+        Restart();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +61,24 @@ public class PlayerController : MonoBehaviour
 
             SetCountText();
         }
-        
+
+    }
+
+    void OnJump()
+    {
+        rb.AddForce(new Vector3(0, JumpForce, 0));
+    }
+
+    void Restart()
+    {
+        if(transform.position.y < -10)
+        {
+            SceneManager.LoadScene("MiniGame");
+        }
+    }
+    
+    void OnLose()
+    {
+        SceneManager.LoadScene("MiniGame");
     }
 }
