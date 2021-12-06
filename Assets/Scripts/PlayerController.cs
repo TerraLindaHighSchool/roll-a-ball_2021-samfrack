@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private int count;
     private float movementX;
     private float movementY;
+    private bool isOnGround;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= 12)
+        if (count >= 15)
         {
             winTextObject.SetActive(true);
         }
@@ -64,9 +65,31 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        string nameOfCollisonObject = collision.gameObject.name;
+        if(nameOfCollisonObject == "Ground")
+        {
+            isOnGround = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        string nameOfCollisonObject = collision.gameObject.name;
+        if (nameOfCollisonObject == "Ground")
+        {
+            isOnGround = false;
+        }
+
+    }
+
     void OnJump()
     {
-        rb.AddForce(new Vector3(0, JumpForce, 0));
+        if(isOnGround)
+        {
+            rb.AddForce(new Vector3(0, JumpForce, 0));
+        }
     }
 
     void Restart()
