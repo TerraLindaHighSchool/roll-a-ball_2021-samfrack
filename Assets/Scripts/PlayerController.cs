@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
         winTextObject.SetActive(false);
     }
 
+    // Moves the player
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
         movementY = movementVector.y;
 
     }
+
+    // Sets count for Pickup items. Adds Win Text when max objects have been picked up. 
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Moves player and sets speed
     void FixedUpdate()
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
@@ -53,6 +57,7 @@ public class PlayerController : MonoBehaviour
         Restart();
     }
 
+    // Increments count when Pickup is touched.
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("PickUp"))
@@ -65,6 +70,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // Sets boolean to true if ball is touching the ground
     private void OnCollisionStay(Collision collision)
     {
         string nameOfCollisonObject = collision.gameObject.name;
@@ -74,6 +80,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Sets boolean to false if ball isn't touching the ground
     private void OnCollisionExit(Collision collision)
     {
         string nameOfCollisonObject = collision.gameObject.name;
@@ -84,6 +91,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // Makes ball jump up when space is pressed
     void OnJump()
     {
         if(isOnGround)
@@ -92,6 +100,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Resets world if ball falls off of ground
     void Restart()
     {
         if(transform.position.y < -10)
@@ -100,6 +109,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    // Resets world if key r is pressed
     void OnLose()
     {
         SceneManager.LoadScene("MiniGame");
