@@ -9,14 +9,14 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
     [SerializeField] private float JumpForce = 500;
-    public TextMeshProUGUI countText;
+    public TextMeshProUGUI countText; 
     public GameObject winTextObject;
-
     private Rigidbody rb;
     private int count;
     private float movementX;
     private float movementY;
     private bool isOnGround;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     // Moves the player
     void OnMove(InputValue movementValue)
     {
+        
         Vector2 movementVector = movementValue.Get<Vector2>();
 
         movementX = movementVector.x;
@@ -42,10 +43,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= 15)
-        {
-            winTextObject.SetActive(true);
-        }
+        
     }
 
     // Moves player and sets speed
@@ -67,7 +65,13 @@ public class PlayerController : MonoBehaviour
 
             SetCountText();
         }
+            
 
+        if (other.gameObject.CompareTag("End"))
+        {
+            winTextObject.SetActive(true);
+            
+        }
     }
 
     // Sets boolean to true if ball is touching the ground
@@ -78,6 +82,8 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
         }
+        
+        
     }
 
     // Sets boolean to false if ball isn't touching the ground
@@ -115,3 +121,5 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("MiniGame");
     }
 }
+
+
