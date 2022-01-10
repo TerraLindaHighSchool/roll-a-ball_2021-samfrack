@@ -9,13 +9,16 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
     [SerializeField] private float JumpForce = 500;
-    public TextMeshProUGUI countText; 
+    [SerializeField] private Timer timer;
+    public TextMeshProUGUI countText;
+    public TextMeshProUGUI winText;
     public GameObject winTextObject;
     private Rigidbody rb;
     private int count;
     private float movementX;
     private float movementY;
     private bool isOnGround;
+    private float score;
 
 
     // Start is called before the first frame update
@@ -46,6 +49,8 @@ public class PlayerController : MonoBehaviour
         
     }
 
+
+
     // Moves player and sets speed
     void FixedUpdate()
     {
@@ -65,12 +70,20 @@ public class PlayerController : MonoBehaviour
 
             SetCountText();
         }
+
+        if (other.gameObject.CompareTag("Background"))
+        {
+            SceneManager.LoadScene("MiniGame");
+        }
             
 
         if (other.gameObject.CompareTag("End"))
         {
+            winText.text = "Score: " + score;
             winTextObject.SetActive(true);
-            
+            score = count / timer.runningTime * 10; 
+
+            timer.gameOver = true;
         }
     }
 

@@ -8,15 +8,11 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timerText; 
-    private bool gameOver = false;
-    private float runningTime;
+    public bool gameOver { private get; set; }
+    public float runningTime { get; private set; }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        timerText = GetComponentInChildren<TMPro.TextMeshProUGUI>(); // cache the text component
-    }
-
+  
 
     // Update is called once per frame
     private void Update()
@@ -43,11 +39,5 @@ public class Timer : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            gameOver = true;
-        }
-    }
+   
 }
